@@ -7,7 +7,11 @@ export default function Player({ episodeId, servertype }) {
   }, [episodeId, servertype]);
   return (
     <div className="w-full h-full">
-      <iframe src={`${iframeSrc}`} allowfullscreen className="w-full h-full"></iframe>
+     <iframe
+  src={iframeSrc}
+  allowFullScreen
+  className="w-full h-full"
+  title="Player"></iframe>
     </div>
   );
 }
