@@ -45,11 +45,6 @@ export default function Watch() {
     isFullOverview,
     setIsFullOverview,
     activeEpisodeNum,
-    streamUrl,
-    subtitles,
-    thumbnail,
-    intro,
-    outro,
     seasons,
     episodeId,
     setEpisodeId,
@@ -57,6 +52,8 @@ export default function Watch() {
     setActiveServerId,
     servers,
     serverLoading,
+    activeServerType,
+    setActiveServerType,
   } = useWatch(animeId, initialEpisodeId);
   const {
     autoPlay,
@@ -222,29 +219,14 @@ export default function Watch() {
             <div className="player w-full h-fit bg-black flex flex-col">
               <div className="w-full relative h-[480px] max-[1400px]:h-[40vw] max-[1200px]:h-[48vw] max-[1024px]:h-[58vw] max-[600px]:h-[65vw]">
                 {!buffering ? (
-                  <Player
-                    streamUrl={streamUrl}
-                    subtitles={subtitles}
-                    intro={intro}
-                    outro={outro}
-                    thumbnail={thumbnail}
-                    autoSkipIntro={autoSkipIntro}
-                    autoPlay={autoPlay}
-                    autoNext={autoNext}
-                    episodeId={episodeId}
-                    episodes={episodes}
-                    playNext={(id) => setEpisodeId(id)}
-                    animeInfo={animeInfo}
-                    episodeNum={activeEpisodeNum}
-                    streamInfo={streamInfo}
-                  />
+                  <Player episodeId={episodeId} servertype={activeServerType} />
                 ) : (
                   <div className="absolute inset-0 flex justify-center items-center bg-black bg-opacity-50">
                     <BouncingLoader />
                   </div>
                 )}
                 <p className="text-center underline font-medium text-[15px] absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 pointer-events-none">
-                  {!buffering && !streamInfo ? (
+                  {!buffering && !activeServerType ? (
                     servers ? (
                       <>
                         Probably this server is down, try other servers
@@ -282,6 +264,8 @@ export default function Watch() {
                 activeServerId={activeServerId}
                 setActiveServerId={setActiveServerId}
                 serverLoading={serverLoading}
+                setActiveServerType={setActiveServerType}
+                activeServerType={activeServerType}
               />
               {seasons?.length > 0 && (
                 <div className="flex flex-col gap-y-2 bg-[#11101A] p-4">

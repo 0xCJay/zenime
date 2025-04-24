@@ -13,6 +13,8 @@ function Servers({
   activeEpisodeNum,
   activeServerId,
   setActiveServerId,
+  setActiveServerType,
+  activeServerType,
   serverLoading,
 }) {
   const subServers = servers?.filter((server) => server.type === "sub") || [];
@@ -20,26 +22,30 @@ function Servers({
   const rawServers = servers?.filter((server) => server.type === "raw") || [];
 
   useEffect(() => {
-    const savedServerName = localStorage.getItem("server_name");
+    const savedServerType = localStorage.getItem("server_type");
 
-    if (savedServerName) {
+    if (savedServerType) {
       const matchingServer = servers?.find(
-        (server) => server.serverName === savedServerName
+        (server) => server.type === savedServerType
       );
 
       if (matchingServer) {
-        setActiveServerId(matchingServer.data_id);
+        // setActiveServerId(matchingServer.data_id);
+        setActiveServerType(matchingServer.type);
       } else if (servers && servers.length > 0) {
-        setActiveServerId(servers[0].data_id);
+        setActiveServerType(servers[0].type);
+        // setActiveServerId(servers[0].data_id);
       }
     } else if (servers && servers.length > 0) {
-      setActiveServerId(servers[0].data_id);
+      setActiveServerType(servers[0].type);
+      // setActiveServerId(servers[0].data_id);
     }
   }, [servers]);
 
   const handleServerSelect = (server) => {
-    setActiveServerId(server.data_id);
-    localStorage.setItem("server_name", server.serverName);
+    // setActiveServerId(server.data_id);
+    setActiveServerType(server);
+    // localStorage.setItem("server_name", server.serverName);
     localStorage.setItem("server_type", server.type);
   };
   return (
@@ -79,21 +85,16 @@ function Servers({
                   <p className="font-bold text-[14px]">RAW:</p>
                 </div>
                 <div className="flex gap-x-[7px] ml-8 flex-wrap">
-                  {rawServers.map((item, index) => (
-                    <div
-                      key={index}
-                      className={`px-6 py-[5px] rounded-lg cursor-pointer ${
-                        activeServerId === item?.data_id
-                          ? "bg-[#ffbade] text-black"
-                          : "bg-[#373646] text-white"
-                      } max-[700px]:px-3`}
-                      onClick={() => handleServerSelect(item)}
-                    >
-                      <p className="text-[13px] font-semibold">
-                        {item.serverName}
-                      </p>
-                    </div>
-                  ))}
+                  <div
+                    className={`px-6 py-[5px] rounded-lg cursor-pointer ${
+                      activeServerType === "raw"
+                        ? "bg-[#ffbade] text-black"
+                        : "bg-[#373646] text-white"
+                    } max-[700px]:px-3`}
+                    onClick={() => handleServerSelect("sub")}
+                  >
+                    <p className="text-[13px] font-semibold">Server-1</p>
+                  </div>
                 </div>
               </div>
             )}
@@ -111,21 +112,16 @@ function Servers({
                   <p className="font-bold text-[14px]">SUB:</p>
                 </div>
                 <div className="flex gap-x-[7px] ml-8 flex-wrap">
-                  {subServers.map((item, index) => (
-                    <div
-                      key={index}
-                      className={`px-6 py-[5px] rounded-lg cursor-pointer ${
-                        activeServerId === item?.data_id
-                          ? "bg-[#ffbade] text-black"
-                          : "bg-[#373646] text-white"
-                      } max-[700px]:px-3`}
-                      onClick={() => handleServerSelect(item)}
-                    >
-                      <p className="text-[13px] font-semibold">
-                        {item.serverName}
-                      </p>
-                    </div>
-                  ))}
+                  <div
+                    className={`px-6 py-[5px] rounded-lg cursor-pointer ${
+                      activeServerType === "sub"
+                        ? "bg-[#ffbade] text-black"
+                        : "bg-[#373646] text-white"
+                    } max-[700px]:px-3`}
+                    onClick={() => handleServerSelect("sub")}
+                  >
+                    <p className="text-[13px] font-semibold">Server-1</p>
+                  </div>
                 </div>
               </div>
             )}
@@ -143,21 +139,16 @@ function Servers({
                   <p className="font-bold text-[14px]">DUB:</p>
                 </div>
                 <div className="flex gap-x-[7px] ml-8 flex-wrap">
-                  {dubServers.map((item, index) => (
-                    <div
-                      key={index}
-                      className={`px-6 py-[5px] rounded-lg cursor-pointer ${
-                        activeServerId === item?.data_id
-                          ? "bg-[#ffbade] text-black"
-                          : "bg-[#373646] text-white"
-                      } max-[700px]:px-3`}
-                      onClick={() => handleServerSelect(item)}
-                    >
-                      <p className="text-[13px] font-semibold">
-                        {item.serverName}
-                      </p>
-                    </div>
-                  ))}
+                  <div
+                    className={`px-6 py-[5px] rounded-lg cursor-pointer ${
+                      activeServerType === "dub"
+                        ? "bg-[#ffbade] text-black"
+                        : "bg-[#373646] text-white"
+                    } max-[700px]:px-3`}
+                    onClick={() => handleServerSelect("dub")}
+                  >
+                    <p className="text-[13px] font-semibold">Server-1</p>
+                  </div>
                 </div>
               </div>
             )}
